@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-URL = "mongodb+srv://mohammadsalah:j3jAEhUOvjxSOUG4@cluster0.35szzhv.mongodb.net/?retryWrites=true&w=majority"
+URL = "mongodb://mongo:27017"
 
 def add_data():
     with MongoClient(URL) as client:
