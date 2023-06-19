@@ -23,6 +23,14 @@ This is a sample application built using Kafka and Python. It demonstrates how t
 ## Usage
 Once the application is running, you can access the producer and consumer services using the specified ports. Use the provided Kafka topic to send and receive messages.
 
+## Testing
+To test the application, follow these steps:
+
+1. Ensure that the application is running using `docker-compose up`.
+2. Open a new terminal window and navigate to the project directory.
+3. Run the `InsertData.py` script to add test data to the Kafka topic:
+4. `InsertData.py` This script will add sample data to the Kafka topic for testing purposes.
+
 ## Contributing
 Contributions are welcome! Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to contribute to this project.
 
