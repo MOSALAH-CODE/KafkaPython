@@ -1,11 +1,13 @@
 import asyncio
-from producer import create_producer
+from producer import MessageProducer
 from pymongo import MongoClient
 
 URL = "mongodb+srv://mohammadsalah:j3jAEhUOvjxSOUG4@cluster0.35szzhv.mongodb.net/?retryWrites=true&w=majority"
+KAFKA_BROKER = "kafka:9092"
+KAFKA_TOPIC = "testtopic"
 
 async def create_db():
-    client = await MongoClient.connect(URL)
+    client = await MongoClient(URL)
     try:
         db = client["test"]
         collection = await db.create_collection("testcoll")
@@ -28,6 +30,7 @@ async def main():
     await create_db()
 
     before_data = [{}]
+    message_producer = MessageProducer(KAFKA_BROKER, KAFKA_TOPIC)
     while True:
         print("Yeni kayıt var mı kontrol ediliyor...")
         current_data = await get_data()
@@ -39,7 +42,11 @@ async def main():
                     new_data.append(cd)
             before_data = current_data
             if new_data:
-                await create_producer(new_data)
+                resp = await message_producer.send_msg(new_data)
+                if resp['status_code'] == 200:
+                    print("Mesaj gönderildi...")
+                else:
+                    print("Mesaj gönderme hatası:", resp['error'])
         await asyncio.sleep(10)
 
 if __name__ == "__main__":
